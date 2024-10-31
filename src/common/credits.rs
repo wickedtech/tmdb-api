@@ -18,6 +18,8 @@ pub struct Cast {
     pub cast_id: u64,
     pub character: String,
     pub order: u64,
+    #[serde(default)]
+    pub profile_path: Option<String>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]

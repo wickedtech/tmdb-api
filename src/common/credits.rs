@@ -30,4 +30,6 @@ pub struct Crew {
     pub person: PersonShort,
     pub department: String,
     pub job: String,
+    #[serde(default)]
+    pub profile_path: Option<String>,
 }

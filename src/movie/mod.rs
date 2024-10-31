@@ -52,6 +52,8 @@ use crate::genre::Genre;
 pub struct MovieBase {
     pub id: u64,
     pub title: String,
+    #[serde(default)]
+    pub origin_country: Vec<String>,
     pub original_title: String,
     pub original_language: String,
     pub overview: String,

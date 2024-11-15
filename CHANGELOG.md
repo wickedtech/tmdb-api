@@ -6,6 +6,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.0](https://github.com/wickedtech/tmdb-api/compare/v0.8.0...v0.9.0) - 2024-11-15
+
+### Added
+
+- *(genre)* add function to specify country when listing ([#79](https://github.com/wickedtech/tmdb-api/pull/79))
+- *(configuration)* implement commands ([#83](https://github.com/wickedtech/tmdb-api/pull/83))
+- *(genre)* add method to specify language ([#86](https://github.com/wickedtech/tmdb-api/pull/86))
+
+### Fixed
+
+- *(tvshow)* make episode number nullable ([#84](https://github.com/wickedtech/tmdb-api/pull/84))
+
+### Other
+
+- add movie trending
+- add to crew as well
+- add `profile_path` to crew
+- expose `origin_country`
+- *(certification)* add some usage examples ([#82](https://github.com/wickedtech/tmdb-api/pull/82))
+
 ## [0.8.0](https://github.com/jdrouet/tmdb-api/compare/v0.7.0...v0.8.0) - 2024-03-24
 
 ### Added

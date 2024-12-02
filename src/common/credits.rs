@@ -15,7 +15,7 @@ pub struct Cast {
     pub credit: CreditCommon,
     #[serde(flatten)]
     pub person: PersonShort,
-    pub cast_id: u64,
+    pub cast_id: Option<u64>,
     pub character: String,
     pub order: u64,
     #[serde(default)]

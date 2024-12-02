@@ -1,18 +1,19 @@
-use crate::common::video::Video;
 use std::borrow::Cow;
 
-/// Get a list of recommended tvs for a tv shows.
+use crate::common::keyword::Keyword;
+
+/// Get the keywords that have been added to a tv.
 ///
 /// ```rust
 /// use tmdb_api::prelude::Command;
 /// use tmdb_api::client::Client;
 /// use tmdb_api::client::reqwest::ReqwestExecutor;
-/// use tmdb_api::tvshow::videos::TVShowVideos;
+/// use tmdb_api::tv::keywords::TVShowKeywords;
 ///
 /// #[tokio::main]
 /// async fn main() {
 ///     let client = Client::<ReqwestExecutor>::new("this-is-my-secret-token".into());
-///     let cmd = TVShowVideos::new(1);
+///     let cmd = TVShowKeywords::new(1);
 ///     let result = cmd.execute(&client).await;
 ///     match result {
 ///         Ok(res) => println!("found: {:#?}", res),
@@ -21,52 +22,38 @@ use std::borrow::Cow;
 /// }
 /// ```
 #[derive(Clone, Debug, Default)]
-pub struct TVShowVideos {
-    /// ID of the tv.
+pub struct TVShowKeywords {
+    /// ID of the show
     pub series_id: u64,
-    /// ISO 639-1 value to display translated data for the fields that support it.
-    pub language: Option<String>,
 }
 
-impl TVShowVideos {
+impl TVShowKeywords {
     pub fn new(series_id: u64) -> Self {
-        Self {
-            series_id,
-            language: None,
-        }
-    }
-
-    pub fn with_language(mut self, value: Option<String>) -> Self {
-        self.language = value;
-        self
+        Self { series_id }
     }
 }
 
-#[derive(Debug, Deserialize)]
-pub struct TVShowVideosResult {
+#[derive(Debug, Deserialize, Serialize)]
+pub struct TVShowKeywordsResult {
     pub id: u64,
-    pub results: Vec<Video>,
+    pub keywords: Vec<Keyword>,
 }
 
-impl crate::prelude::Command for TVShowVideos {
-    type Output = TVShowVideosResult;
+impl crate::prelude::Command for TVShowKeywords {
+    type Output = TVShowKeywordsResult;
 
     fn path(&self) -> Cow<'static, str> {
-        Cow::Owned(format!("/tv/{}/videos", self.series_id))
+        Cow::Owned(format!("/tv/{}/keywords", self.series_id))
     }
 
     fn params(&self) -> Vec<(&'static str, Cow<'_, str>)> {
-        let mut res = Vec::with_capacity(1);
-        if let Some(language) = self.language.as_ref() {
-            res.push(("language", Cow::Borrowed(language.as_str())));
-        }
-        res
+        Vec::new()
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::TVShowVideos;
+    use super::TVShowKeywords;
     use crate::client::reqwest::ReqwestExecutor;
     use crate::client::Client;
     use crate::prelude::Command;
@@ -81,18 +68,18 @@ mod tests {
             .build()
             .unwrap();
 
+        let cmd = TVShowKeywords::new(550);
+
         let _m = server
-            .mock("GET", "/tv/550/videos")
+            .mock("GET", "/tv/550/keywords")
             .match_query(Matcher::UrlEncoded("api_key".into(), "secret".into()))
             .with_status(200)
             .with_header("content-type", "application/json")
-            .with_body(include_str!("../../assets/tv-videos.json"))
+            .with_body(include_str!("../../assets/tv-keywords.json"))
             .create_async()
             .await;
-
-        let result = TVShowVideos::new(550).execute(&client).await.unwrap();
+        let result = cmd.execute(&client).await.unwrap();
         assert_eq!(result.id, 550);
-        assert!(!result.results.is_empty());
     }
 
     #[tokio::test]
@@ -104,16 +91,17 @@ mod tests {
             .build()
             .unwrap();
 
+        let cmd = TVShowKeywords::new(42);
+
         let _m = server
-            .mock("GET", "/tv/550/videos")
+            .mock("GET", "/tv/42/keywords")
             .match_query(Matcher::UrlEncoded("api_key".into(), "secret".into()))
             .with_status(401)
             .with_header("content-type", "application/json")
             .with_body(include_str!("../../assets/invalid-api-key.json"))
             .create_async()
             .await;
-
-        let err = TVShowVideos::new(550).execute(&client).await.unwrap_err();
+        let err = cmd.execute(&client).await.unwrap_err();
         let server_err = err.as_server_error().unwrap();
         assert_eq!(server_err.status_code, 7);
     }
@@ -127,16 +115,17 @@ mod tests {
             .build()
             .unwrap();
 
+        let cmd = TVShowKeywords::new(42);
+
         let _m = server
-            .mock("GET", "/tv/550/videos")
+            .mock("GET", "/tv/42/keywords")
             .match_query(Matcher::UrlEncoded("api_key".into(), "secret".into()))
             .with_status(404)
             .with_header("content-type", "application/json")
             .with_body(include_str!("../../assets/resource-not-found.json"))
             .create_async()
             .await;
-
-        let err = TVShowVideos::new(550).execute(&client).await.unwrap_err();
+        let err = cmd.execute(&client).await.unwrap_err();
         let server_err = err.as_server_error().unwrap();
         assert_eq!(server_err.status_code, 34);
     }
@@ -144,7 +133,7 @@ mod tests {
 
 #[cfg(all(test, feature = "integration"))]
 mod integration_tests {
-    use super::TVShowVideos;
+    use super::TVShowKeywords;
     use crate::client::reqwest::ReqwestExecutor;
     use crate::client::Client;
     use crate::prelude::Command;
@@ -153,8 +142,9 @@ mod integration_tests {
     async fn execute() {
         let secret = std::env::var("TMDB_TOKEN_V3").unwrap();
         let client = Client::<ReqwestExecutor>::new(secret);
+        let cmd = TVShowKeywords::new(550);
 
-        let result = TVShowVideos::new(550).execute(&client).await.unwrap();
+        let result = cmd.execute(&client).await.unwrap();
         assert_eq!(result.id, 550);
     }
 }

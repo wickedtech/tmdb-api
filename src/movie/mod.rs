@@ -21,8 +21,6 @@ pub mod now_playing;
 #[cfg(feature = "commands")]
 pub mod popular;
 #[cfg(feature = "commands")]
-pub mod trending;
-#[cfg(feature = "commands")]
 pub mod recommendations;
 #[cfg(feature = "commands")]
 pub mod release_dates;
@@ -36,6 +34,8 @@ pub mod similar;
 pub mod top_rated;
 #[cfg(feature = "commands")]
 pub mod translations;
+#[cfg(feature = "commands")]
+pub mod trending;
 #[cfg(feature = "commands")]
 pub mod upcoming;
 #[cfg(feature = "commands")]

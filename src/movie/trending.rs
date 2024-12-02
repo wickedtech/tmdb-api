@@ -1,5 +1,5 @@
-use std::{borrow::Cow, fmt};
 use crate::common::PaginatedResult;
+use std::{borrow::Cow, fmt};
 
 /// Get a list of the current trending movies on TMDB. This list updates daily.
 ///

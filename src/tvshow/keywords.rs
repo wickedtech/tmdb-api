@@ -36,7 +36,7 @@ impl TVShowKeywords {
 #[derive(Debug, Deserialize, Serialize)]
 pub struct TVShowKeywordsResult {
     pub id: u64,
-    pub keywords: Vec<Keyword>,
+    pub results: Vec<Keyword>,
 }
 
 impl crate::prelude::Command for TVShowKeywords {

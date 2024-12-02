@@ -12,6 +12,8 @@ pub mod search;
 pub mod similar;
 #[cfg(feature = "commands")]
 pub mod watch_providers;
+#[cfg(feature = "commands")]
+pub mod videos;
 
 pub mod episode;
 pub mod season;

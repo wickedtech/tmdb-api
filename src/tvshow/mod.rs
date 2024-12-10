@@ -1,6 +1,8 @@
 #[cfg(feature = "commands")]
 pub mod content_ratings;
 #[cfg(feature = "commands")]
+pub mod credits;
+#[cfg(feature = "commands")]
 pub mod details;
 #[cfg(feature = "commands")]
 pub mod images;
@@ -15,12 +17,11 @@ pub mod search;
 #[cfg(feature = "commands")]
 pub mod similar;
 #[cfg(feature = "commands")]
+pub mod trending;
+#[cfg(feature = "commands")]
 pub mod videos;
 #[cfg(feature = "commands")]
 pub mod watch_providers;
-#[cfg(feature = "commands")]
-pub mod credits;
-
 
 pub mod episode;
 pub mod season;

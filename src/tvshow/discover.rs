@@ -23,6 +23,7 @@ pub struct TVShowDiscover {
     /// With watch monetization types
     pub with_watch_monetization_types: Option<String>,
     pub with_primary_release_date_gte: Option<String>,
+    pub with_vote_average_gte: Option<f32>,
 }
 
 impl TVShowDiscover {
@@ -38,6 +39,7 @@ impl TVShowDiscover {
             sort_by: Some("popularity.desc".into()),
             with_watch_monetization_types: None,
             with_primary_release_date_gte: None,
+            with_vote_average_gte: None,
         }
     }
 
@@ -88,6 +90,11 @@ impl TVShowDiscover {
 
     pub fn with_primary_release_date_gte(mut self, value: Option<String>) -> Self {
         self.with_primary_release_date_gte = value;
+        self
+    }
+
+    pub fn with_vote_average_gte(mut self, value: Option<f32>) -> Self {
+        self.with_vote_average_gte = value;
         self
     }
 }
@@ -142,6 +149,12 @@ impl crate::prelude::Command for TVShowDiscover {
             res.push((
                 "primary_release_date.gte",
                 Cow::Owned(with_primary_release_date_gte.to_string()),
+            ));
+        }
+        if let Some(with_vote_average_gte) = self.with_vote_average_gte {
+            res.push((
+                "vote_average.gte",
+                Cow::Owned(with_vote_average_gte.to_string()),
             ));
         }
         

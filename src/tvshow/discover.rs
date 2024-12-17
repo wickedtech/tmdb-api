@@ -18,6 +18,10 @@ pub struct TVShowDiscover {
     pub with_origin_country: Option<String>,
     /// Language code. Must be lowercase.
     pub with_original_language: Option<String>,
+    /// Sort By
+    pub sort_by: Option<String>,
+    /// With watch monetization types
+    pub with_watch_monetization_types: Option<String>,
 }
 
 impl TVShowDiscover {
@@ -30,6 +34,8 @@ impl TVShowDiscover {
             watch_region: None,
             with_origin_country: None,
             with_original_language: None,
+            sort_by: Some("popularity.desc".into()),
+            with_watch_monetization_types: None,
         }
     }
 
@@ -65,6 +71,16 @@ impl TVShowDiscover {
 
     pub fn with_original_language(mut self, value: Option<String>) -> Self {
         self.with_original_language = value;
+        self
+    }
+
+    pub fn with_sort_by(mut self, value: Option<String>) -> Self {
+        self.sort_by = value;
+        self
+    }
+
+    pub fn with_watch_monetization_types(mut self, value: Option<String>) -> Self {
+        self.with_watch_monetization_types = value;
         self
     }
 }
@@ -104,6 +120,15 @@ impl crate::prelude::Command for TVShowDiscover {
             res.push((
                 "with_original_language",
                 Cow::Owned(with_original_language.to_string()),
+            ));
+        }
+        if let Some(sort_by) = self.sort_by.as_ref() {
+            res.push(("sort_by", Cow::Borrowed(sort_by.as_str())));
+        }
+        if let Some(with_watch_monetization_types) = self.with_watch_monetization_types.as_ref() {
+            res.push((
+                "with_watch_monetization_types",
+                Cow::Owned(with_watch_monetization_types.to_string()),
             ));
         }
 

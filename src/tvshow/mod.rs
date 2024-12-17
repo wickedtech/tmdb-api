@@ -20,6 +20,8 @@ pub mod videos;
 pub mod watch_providers;
 #[cfg(feature = "commands")]
 pub mod credits;
+#[cfg(feature = "commands")]
+pub mod discover;
 
 
 pub mod episode;

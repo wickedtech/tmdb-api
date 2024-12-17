@@ -19,6 +19,8 @@ pub mod search;
 #[cfg(feature = "commands")]
 pub mod similar;
 #[cfg(feature = "commands")]
+pub mod trending;
+#[cfg(feature = "commands")]
 pub mod videos;
 #[cfg(feature = "commands")]
 pub mod watch_providers;

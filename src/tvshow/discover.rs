@@ -95,10 +95,16 @@ impl crate::prelude::Command for TVShowDiscover {
             res.push(("watch_region", Cow::Owned(watch_region.to_string())));
         }
         if let Some(with_origin_country) = self.with_origin_country.as_ref() {
-            res.push(("with_origin_country", Cow::Owned(with_origin_country.to_string())));
+            res.push((
+                "with_origin_country",
+                Cow::Owned(with_origin_country.to_string()),
+            ));
         }
         if let Some(with_original_language) = self.with_original_language.as_ref() {
-            res.push(("with_original_language", Cow::Owned(with_original_language.to_string())));
+            res.push((
+                "with_original_language",
+                Cow::Owned(with_original_language.to_string()),
+            ));
         }
 
         res
@@ -126,9 +132,10 @@ mod tests {
 
         let _m = server
             .mock("GET", super::PATH)
-            .match_query(Matcher::AllOf(vec![
-                Matcher::UrlEncoded("api_key".into(), "secret".into()),
-            ]))
+            .match_query(Matcher::AllOf(vec![Matcher::UrlEncoded(
+                "api_key".into(),
+                "secret".into(),
+            )]))
             .with_status(200)
             .with_header("content-type", "application/json")
             .with_body(include_str!("../../assets/discover-tv.json"))
@@ -156,9 +163,10 @@ mod tests {
 
         let _m = server
             .mock("GET", super::PATH)
-            .match_query(Matcher::AllOf(vec![
-                Matcher::UrlEncoded("api_key".into(), "secret".into()),
-            ]))
+            .match_query(Matcher::AllOf(vec![Matcher::UrlEncoded(
+                "api_key".into(),
+                "secret".into(),
+            )]))
             .with_status(401)
             .with_header("content-type", "application/json")
             .with_body(include_str!("../../assets/invalid-api-key.json"))
@@ -182,9 +190,10 @@ mod tests {
 
         let _m = server
             .mock("GET", super::PATH)
-            .match_query(Matcher::AllOf(vec![
-                Matcher::UrlEncoded("api_key".into(), "secret".into()),
-            ]))
+            .match_query(Matcher::AllOf(vec![Matcher::UrlEncoded(
+                "api_key".into(),
+                "secret".into(),
+            )]))
             .with_status(404)
             .with_header("content-type", "application/json")
             .with_body(include_str!("../../assets/resource-not-found.json"))
@@ -208,9 +217,10 @@ mod tests {
 
         let _m = server
             .mock("GET", super::PATH)
-            .match_query(Matcher::AllOf(vec![
-                Matcher::UrlEncoded("api_key".into(), "secret".into()),
-            ]))
+            .match_query(Matcher::AllOf(vec![Matcher::UrlEncoded(
+                "api_key".into(),
+                "secret".into(),
+            )]))
             .with_status(422)
             .with_header("content-type", "application/json")
             .with_body(include_str!("../../assets/validation-error.json"))

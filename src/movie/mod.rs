@@ -7,6 +7,8 @@ pub mod credits;
 #[cfg(feature = "commands")]
 pub mod details;
 #[cfg(feature = "commands")]
+pub mod discover;
+#[cfg(feature = "commands")]
 pub mod external_ids;
 #[cfg(feature = "commands")]
 pub mod images;
@@ -42,8 +44,6 @@ pub mod upcoming;
 pub mod videos;
 #[cfg(feature = "commands")]
 pub mod watch_providers;
-#[cfg(feature = "commands")]
-pub mod discover;
 
 use crate::collection::CollectionBase;
 use crate::common::country::Country;

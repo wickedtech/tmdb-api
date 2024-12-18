@@ -24,6 +24,8 @@ pub mod trending;
 pub mod videos;
 #[cfg(feature = "commands")]
 pub mod watch_providers;
+#[cfg(feature = "commands")]
+pub mod translations;
 
 pub mod episode;
 pub mod season;

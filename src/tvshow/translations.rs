@@ -1,17 +1,17 @@
 use std::borrow::Cow;
 
-/// Get a list of translations that have been created for a movie.
+/// Get a list of translations that have been created for a tv.
 ///
 /// ```rust
 /// use tmdb_api::prelude::Command;
 /// use tmdb_api::client::Client;
 /// use tmdb_api::client::reqwest::ReqwestExecutor;
-/// use tmdb_api::movie::translations::MovieTranslations;
+/// use tmdb_api::tv::translations::TVShowTranslations;
 ///
 /// #[tokio::main]
 /// async fn main() {
 ///     let client = Client::<ReqwestExecutor>::new("this-is-my-secret-token".into());
-///     let cmd = MovieTranslations::new(1);
+///     let cmd = TVShowTranslations::new(1);
 ///     let result = cmd.execute(&client).await;
 ///     match result {
 ///         Ok(res) => println!("found: {:#?}", res),
@@ -20,14 +20,14 @@ use std::borrow::Cow;
 /// }
 /// ```
 #[derive(Clone, Debug, Default)]
-pub struct MovieTranslations {
-    /// ID of the movie.
-    pub movie_id: u64,
+pub struct TVShowTranslations {
+    /// ID of the tv.
+    pub series_id: u64,
 }
 
-impl MovieTranslations {
-    pub fn new(movie_id: u64) -> Self {
-        Self { movie_id }
+impl TVShowTranslations {
+    pub fn new(series_id: u64) -> Self {
+        Self { series_id }
     }
 }
 
@@ -53,16 +53,16 @@ pub struct Translation {
 }
 
 #[derive(Debug, Deserialize, Serialize)]
-pub struct MovieTranslationsResult {
+pub struct TVShowTranslationsResult {
     pub id: u64,
     pub translations: Vec<Translation>,
 }
 
-impl crate::prelude::Command for MovieTranslations {
-    type Output = MovieTranslationsResult;
+impl crate::prelude::Command for TVShowTranslations {
+    type Output = TVShowTranslationsResult;
 
     fn path(&self) -> Cow<'static, str> {
-        Cow::Owned(format!("/movie/{}/translations", self.movie_id))
+        Cow::Owned(format!("/tv/{}/translations", self.series_id))
     }
 
     fn params(&self) -> Vec<(&'static str, Cow<'_, str>)> {
@@ -72,7 +72,7 @@ impl crate::prelude::Command for MovieTranslations {
 
 #[cfg(test)]
 mod tests {
-    use super::MovieTranslations;
+    use super::TVShowTranslations;
     use crate::client::reqwest::ReqwestExecutor;
     use crate::client::Client;
     use crate::prelude::Command;
@@ -88,15 +88,15 @@ mod tests {
             .unwrap();
 
         let _m = server
-            .mock("GET", "/movie/550/translations")
+            .mock("GET", "/tv/550/translations")
             .match_query(Matcher::UrlEncoded("api_key".into(), "secret".into()))
             .with_status(200)
             .with_header("content-type", "application/json")
-            .with_body(include_str!("../../assets/movie-translations.json"))
+            .with_body(include_str!("../../assets/tv-translations.json"))
             .create_async()
             .await;
 
-        let result = MovieTranslations::new(550).execute(&client).await.unwrap();
+        let result = TVShowTranslations::new(550).execute(&client).await.unwrap();
         assert_eq!(result.id, 550);
         assert!(!result.translations.is_empty());
     }
@@ -111,7 +111,7 @@ mod tests {
             .unwrap();
 
         let _m = server
-            .mock("GET", "/movie/550/translations")
+            .mock("GET", "/tv/550/translations")
             .match_query(Matcher::UrlEncoded("api_key".into(), "secret".into()))
             .with_status(401)
             .with_header("content-type", "application/json")
@@ -119,7 +119,7 @@ mod tests {
             .create_async()
             .await;
 
-        let err = MovieTranslations::new(550)
+        let err = TVShowTranslations::new(550)
             .execute(&client)
             .await
             .unwrap_err();
@@ -137,7 +137,7 @@ mod tests {
             .unwrap();
 
         let _m = server
-            .mock("GET", "/movie/550/translations")
+            .mock("GET", "/tv/550/translations")
             .match_query(Matcher::UrlEncoded("api_key".into(), "secret".into()))
             .with_status(404)
             .with_header("content-type", "application/json")
@@ -145,7 +145,7 @@ mod tests {
             .create_async()
             .await;
 
-        let err = MovieTranslations::new(550)
+        let err = TVShowTranslations::new(550)
             .execute(&client)
             .await
             .unwrap_err();
@@ -156,7 +156,7 @@ mod tests {
 
 #[cfg(all(test, feature = "integration"))]
 mod integration_tests {
-    use super::MovieTranslations;
+    use super::TVShowTranslations;
     use crate::client::reqwest::ReqwestExecutor;
     use crate::client::Client;
     use crate::prelude::Command;
@@ -166,7 +166,7 @@ mod integration_tests {
         let secret = std::env::var("TMDB_TOKEN_V3").unwrap();
         let client = Client::<ReqwestExecutor>::new(secret);
 
-        let result = MovieTranslations::new(550).execute(&client).await.unwrap();
+        let result = TVShowTranslations::new(550).execute(&client).await.unwrap();
         assert_eq!(result.id, 550);
     }
 }

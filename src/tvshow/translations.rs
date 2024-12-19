@@ -34,7 +34,7 @@ impl TVShowTranslations {
 #[derive(Debug, Deserialize, Serialize)]
 pub struct TranslationData {
     #[serde(deserialize_with = "crate::util::empty_string::deserialize")]
-    pub title: Option<String>,
+    pub name: Option<String>,
     #[serde(deserialize_with = "crate::util::empty_string::deserialize")]
     pub tagline: Option<String>,
     #[serde(deserialize_with = "crate::util::empty_string::deserialize")]

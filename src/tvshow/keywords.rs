@@ -8,7 +8,7 @@ use crate::common::keyword::Keyword;
 /// use tmdb_api::prelude::Command;
 /// use tmdb_api::client::Client;
 /// use tmdb_api::client::reqwest::ReqwestExecutor;
-/// use tmdb_api::tv::keywords::TVShowKeywords;
+/// use tmdb_api::tvshow::keywords::TVShowKeywords;
 ///
 /// #[tokio::main]
 /// async fn main() {

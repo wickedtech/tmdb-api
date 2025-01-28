@@ -6,7 +6,7 @@ use std::borrow::Cow;
 /// use tmdb_api::prelude::Command;
 /// use tmdb_api::client::Client;
 /// use tmdb_api::client::reqwest::ReqwestExecutor;
-/// use tmdb_api::tv::content_ratings::TVShowContentRatings;
+/// use tmdb_api::tvshow::content_ratings::TVShowContentRatings;
 ///
 /// #[tokio::main]
 /// async fn main() {

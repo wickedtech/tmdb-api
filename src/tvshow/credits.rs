@@ -8,7 +8,7 @@ use crate::common::credits::{Cast, Crew};
 /// use tmdb_api::prelude::Command;
 /// use tmdb_api::client::Client;
 /// use tmdb_api::client::reqwest::ReqwestExecutor;
-/// use tmdb_api::tv::credits::TvShowCredits;
+/// use tmdb_api::tvshow::credits::TvShowCredits;
 ///
 /// #[tokio::main]
 /// async fn main() {

@@ -6,6 +6,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.0](https://github.com/wickedtech/tmdb-api/compare/v0.8.0...v0.9.0) - 2025-01-28
+
+### Added
+
+- *(genre)* add function to specify country when listing (#79)
+- *(configuration)* implement commands (#83)
+- *(genre)* add method to specify language (#86)
+
+### Fixed
+
+- fix tv show translations
+- fix air date
+- fix tv show keywords
+- *(tvshow)* make episode number nullable (#84)
+
+### Other
+
+- add official videos
+- add translations
+- add `with_vote_average_gte`
+- add `with_primary_release_date_gte`
+- add `with_watch_monetization_types`
+- Merge branch 'main' of github.com:wickedtech/tmdb-api
+- fmt
+- add discover
+- cast id optional
+- add tv credits
+- expose content ratings for tv show
+- add tv show keywords
+- fmt
+- expose tv how videos
+- add movie trending
+- add to crew as well
+- add `profile_path` to crew
+- expose `origin_country`
+- *(deps)* bump rustls from 0.22.2 to 0.22.4 (#89)
+- *(deps)* bump h2 from 0.3.25 to 0.3.26 (#88)
+- *(certification)* add some usage examples (#82)
+
 ## [0.8.0](https://github.com/jdrouet/tmdb-api/compare/v0.7.0...v0.8.0) - 2024-03-24
 
 ### Added

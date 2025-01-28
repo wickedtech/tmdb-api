@@ -4,6 +4,7 @@ pub struct Video {
     pub name: String,
     #[serde(rename = "type")]
     pub kind: String,
+    pub official: bool,
     pub site: String,
     pub key: String,
     pub published_at: chrono::DateTime<chrono::Utc>,
